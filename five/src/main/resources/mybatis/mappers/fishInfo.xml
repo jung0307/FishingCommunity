@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="mapper.fishInfo">
+
+   	<resultMap type="fishInfoVO" id="fishInfoResult">
+   		<result property="fishImage " column="fishImage "/>
+   		<result property="fishName " column="fishName "/>
+   		<result property="fishExplanation" column="fishExplanation"/>
+   		<result property="fishLocation" column="fishLocation"/>
+   		<result property="fishTime" column="fishTime"/>
+   		<result property="fishWeather" column="fishWeather"/>
+   		<result property="fishNum" column="fishNum"/>
+   	</resultMap>
+   	
+ 
+	<insert id="insertFishInfo" parameterType="fishInfoVO">
+		insert into thuman0503.fishInfoJYY(
+		fishImage , fishName , fishExplanation , fishLocation , fishTime , fishWeather
+		)
+		values(
+		#{fishImage} , #{fishName} , #{fishExplanation} ,#{fishLocation} , #{fishTime} , #{fishWeather}
+		)
+	</insert>
+	
+	<select id="selectFishInfoList" parameterType="java.util.Map" resultMap="fishInfoResult">
+		
+		   <![CDATA[
+				select tb2.*  from (
+					(select tb.* , @ROWNUM:=@ROWNUM+1 as rNum from
+						(select 
+								*
+				 from thuman0503.fishInfoJYY
+   			]]>
+   			
+     		<where>
+     			<if test="searchText == '' and searchSection == null">
+     				
+     			</if>
+   				<if test="searchText != '' and searchText != null and fishNum != null and fishNum != '' ">		
+   					fishNum like CONCAT('%',#{searchText},'%')
+   				</if>
+   				<if test="searchText != '' and searchText != null and fishName != null and fishName != '' ">		
+   					fishName like CONCAT('%',#{searchText},'%')
+   				</if>
+
+
+   			</where> 
+
+   			
+   			<![CDATA[
+   				 order by fishNum desc) tb , (SELECT @ROWNUM:=0) R) order by fishNum desc)tb2 
+							where rNum between #{startNum} and #{endNum}
+   			]]>
+	</select>
+	
+	<select id="selectCountAllFishInfoListBySearchText" parameterType="java.util.Map" resultType="int">
+		select count(*) from thuman0503.fishInfoJYY
+		
+		<where>
+			<if test="fishNum != null and fishNum != '' ">
+				fishNum like CONCAT('%',#{searchText},'%')
+			</if>
+			<if test="fishName != null and fishName != '' ">
+				fishName like CONCAT('%',#{searchText},'%')
+			</if>
+		</where>
+		 
+	</select>
+	
+	<delete id="deleteFishInfo" parameterType="int">
+		delete from thuman0503.fishInfoJYY where fishNum = #{fishNum}
+	</delete>
+	
+	<update id="updateFishInfo" parameterType="fishInfoVO">
+		update thuman0503.fishInfoJYY set fishImage = #{fishImage},
+			fishName = #{fishName} , fishExplanation = #{fishExplanation} ,
+			fishLocation = #{fishLocation} , fishTime = #{fishTime} ,
+			fishWeather = #{fishWeather}
+			
+			where fishNum = #{fishNum}
+	</update>
+	
+   </mapper>

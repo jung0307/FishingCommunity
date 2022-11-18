@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.spring.test01.member.vo.MemberVO" alias="memberVO"/>
+		<typeAlias type="com.spring.test01.member.vo.GuestBookVO" alias="guestBookVO"/>
+		<typeAlias type="com.spring.test01.board.vo.BoardVO" alias="boardVO"/>
+		<typeAlias type="com.spring.test01.board.vo.FreeBoardVO" alias="freeBoardVO"/>
+		<typeAlias type="com.spring.test01.board.vo.ImageVO" alias="imageVO"/>
+		<typeAlias type="com.spring.test01.board.vo.CommentVO" alias="commentVO"/>
+		<typeAlias type="com.spring.test01.board.vo.GoodAndBadVO" alias="goodAndBadVO"/>
+		<typeAlias type="com.spring.test01.fishInfo.vo.FishInfoVO" alias="fishInfoVO"/>
+	</typeAliases>
+	<typeHandlers>
+		<typeHandler handler="com.spring.test01.common.mybatis.LongHandler"
+		javaType="String" jdbcType="LONGVARCHAR"/>
+	</typeHandlers>
+</configuration>

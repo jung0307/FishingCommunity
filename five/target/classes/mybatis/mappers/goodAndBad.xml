@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.goodAndBad" >
+	
+	<resultMap type="goodAndBadVO" id="goodAndBadResult">
+		<result property="boardNum" column="boardNum" />
+		<result property="id" column="id" />
+		<result property="up" column="up" />
+		<result property="down" column="down" />
+	</resultMap>
+	
+	<select id="selectId" parameterType="java.util.Map" resultType="int">
+<!-- 		<![CDATA[
+			select count(*) from goodAndBad where id = #{id} and boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			select count(*) from thuman0503.goodAndBadJYY where id = #{id} and boardNum = #{boardNum}
+		]]>
+	</select>
+	
+	<select id="selectUp" resultType="int" parameterType="int">
+<!-- 		<![CDATA[
+			select sum(up) from goodAndBad where boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			select sum(up) from thuman0503.goodAndBadJYY where boardNum = #{boardNum}
+		]]>
+	</select>
+	<select id="selectDown" resultType="int" parameterType="int">
+<!-- 		<![CDATA[
+			select sum(down) from goodAndBad where boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			select sum(down) from thuman0503.goodAndBadJYY where boardNum = #{boardNum}
+		]]>
+	</select>
+	
+	<select id="selectCountUpById" resultType="int" parameterType="java.util.Map">
+<!-- 		<![CDATA[
+			select max(up) from goodAndBad where boardNum = #{boardNum} and id = #{id}
+		]]> -->
+		<![CDATA[
+			select max(up) from thuman0503.goodAndBadJYY where boardNum = #{boardNum} and id = #{id}
+		]]>
+	</select>
+	
+	<select id="selectCountDownById" resultType="int" parameterType="java.util.Map">
+<!-- 		<![CDATA[
+			select max(down) from thuman0503.goodAndBad where boardNum = #{boardNum} and id = #{id}
+		]]> -->
+		<![CDATA[
+			select max(down) from thuman0503.goodAndBadJYY where boardNum = #{boardNum} and id = #{id}
+		]]>
+	</select>
+	
+	<select id="selectAllContentUpAndDown" resultMap="goodAndBadResult" >
+<!-- 		<![CDATA[
+			select boardNum , sum(up) as up from goodAndBad group by boardNum
+		]]> -->
+		<![CDATA[
+			select boardNum , sum(up) as up from thuman0503.goodAndBadJYY group by boardNum
+		]]>
+	</select>
+	
+	<insert id="insertUpAndDown" parameterType="java.util.Map">
+<!-- 		<![CDATA[
+			insert into goodAndBad(boardNum , id)
+			values(#{boardNum},#{id})
+		]]> -->
+		<![CDATA[
+			insert into thuman0503.goodAndBadJYY(boardNum , id)
+			values(#{boardNum},#{id})
+		]]>
+	</insert>
+
+
+	<update id="updateUpDown" parameterType="java.util.Map">
+<!-- 		<![CDATA[
+			update goodAndBad set up = #{up} , down = #{down} where id = #{id} and boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			update thuman0503.goodAndBadJYY set up = #{up} , down = #{down} where id = #{id} and boardNum = #{boardNum}
+		]]>
+	</update>
+	
+	<delete id="deleteGoodAndBad" parameterType="int">
+<!-- 		<![CDATA[
+			delete from goodAndBad where boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			delete from thuman0503.goodAndBadJYY where boardNum = #{boardNum}
+		]]>
+	</delete>
+	
+</mapper>
+   

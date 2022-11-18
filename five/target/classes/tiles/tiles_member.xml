@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" ></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" ></put-attribute>
+		<put-attribute name="nav" value="/WEB-INF/views/common/nav.jsp" ></put-attribute>
+		<put-attribute name="body" value="" ></put-attribute>
+<!-- 		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp" ></put-attribute> -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="baseLayout2" template="/WEB-INF/views/common/layout2.jsp">
+		<put-attribute name="title" value="" ></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" ></put-attribute>
+		<put-attribute name="nav" value="/WEB-INF/views/common/nav.jsp" ></put-attribute>
+		<put-attribute name="body" value="" ></put-attribute>
+<!-- 		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp" ></put-attribute> -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="baseLayoutNav2" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" ></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" ></put-attribute>
+		<put-attribute name="nav" value="/WEB-INF/views/common/navFreeBoard.jsp" ></put-attribute>
+		<put-attribute name="body" value="" ></put-attribute>
+<!-- 		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp" ></put-attribute> -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" ></put-attribute>
+	</definition>	
+	
+	<definition name="main" extends="baseLayout">
+		<put-attribute name="title" value="메인페이지" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/main.jsp" ></put-attribute>
+	</definition>
+	
+
+	
+	<definition name="loginMemberFormMain" extends="baseLayout2">
+		<put-attribute name="title" value="LogIn"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/member/loginMemberFormMain.jsp" ></put-attribute>
+	</definition>
+	<definition name="addMemberForm" extends="baseLayout2">
+		<put-attribute name="title" value="회원가입"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/member/addMemberForm.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="memberPage" extends="baseLayout">
+		<put-attribute name="title" value="MemberPage"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberPage.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="updateMemberInfoForm" extends="baseLayout2">
+		<put-attribute name="title" value="updateMember"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/member/updateMemberInfoForm.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="guestBookForm" extends="baseLayout">
+		<put-attribute name="title" value="방명록"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/member/guestBookForm.jsp" ></put-attribute>
+	</definition>
+	
+</tiles-definitions>

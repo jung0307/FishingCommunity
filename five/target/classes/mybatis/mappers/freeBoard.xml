@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+   <mapper namespace="mapper.freeBoard" >
+   		<resultMap type="freeBoardVO" id="freeBoardResult">
+   			<result property="boardID" column="boardID"/>
+   			<result property="boardNum" column="boardNum"/>
+   			<result property="boardContent" column="boardContent"/>
+   			<result property="boardCount" column="boardCount"/>
+   			<result property="boardDate" column="boardDate"/>
+   			<result property="fileName" column="fileName"/>
+   			<result property="boardTitle" column="boardTitle"/>
+   			<result property="commentCount" column="commentCount"/>
+   			<result property="boardPwd" column="boardPwd"/>
+   		</resultMap>
+   		
+   		<resultMap type="imageVO" id="imageResult">
+   			<result property="imageFileNo" column="imageFileNo" />
+   			<result property="imageFileName" column="imageFileName" />
+   			<result property="regDate" column="regDate" />
+   			<result property="contentNum" column="contentNum" />
+   		</resultMap>
+   		
+   		<select id="selectBoardList" resultMap="freeBoardResult" parameterType="java.util.Map">
+<!--    			<![CDATA[
+				select tb2.*  from
+					(select tb.* , rownum as rNum from
+						(select * from freeBoard
+   			]]>
+   			
+     		<where>
+     			<if test="searchText == '' and searchSection == null">
+     				
+     			</if>
+   				<if test="searchText != '' and searchText != null and boardID != null and boardID != '' ">		
+   					boardID like '%'||#{searchText}||'%'
+   				</if>
+   				<if test="searchText != '' and searchText != null and boardTitle != null and boardTitle != '' ">		
+   					boardTitle like '%'||#{searchText}||'%'
+   				</if>
+
+
+   			</where> 
+
+   			
+   			<![CDATA[
+   				 order by boardNum desc) tb) tb2 
+							where rNum between #{startNum} and #{endNum}
+   			]]> -->
+   			
+   			<![CDATA[
+				select tb2.*  from (
+					(select tb.* , @ROWNUM:=@ROWNUM+1 as rNum from
+						(select 
+							boardID ,boardNum,boardCount, 
+							boardContent, date_format(boardDate , '%Y-%m-%d') as boardDate, 
+							fileName,boardTitle,commentCount,boardPwd
+				 from thuman0503.freeBoardJYY 
+   			]]>
+   			
+     		<where>
+     			<if test="searchText == '' and searchSection == null">
+     				
+     			</if>
+   				<if test="searchText != '' and searchText != null and boardID != null and boardID != '' ">		
+   					boardID like CONCAT('%',#{searchText},'%')
+   				</if>
+   				<if test="searchText != '' and searchText != null and boardTitle != null and boardTitle != '' ">		
+   					boardTitle like CONCAT('%',#{searchText},'%')
+   				</if>
+
+
+   			</where> 
+
+   			
+   			<![CDATA[
+   				 order by boardNum desc) tb , (SELECT @ROWNUM:=0) R) order by boardNum desc)tb2 
+							where rNum between #{startNum} and #{endNum}
+   			]]>
+   		</select>
+   		
+   		<select id="selectMainBoardList" resultMap="freeBoardResult">
+ <!--   			<![CDATA[
+   					select tb2.*  from
+					(select tb.* , rownum as rNum from
+						(select * from freeboard order by boardNum desc) tb) tb2 
+							where rNum between 1 and 10
+   			]]> -->
+   			<![CDATA[
+							select tb2.*  from(
+							select tb.* , @ROWNUM:=@ROWNUM+1 as rNum from
+						((select 
+							boardID ,boardNum,boardCount, 
+							boardContent, date_format(boardDate , '%Y-%m-%d') as boardDate, 
+							fileName,boardTitle,commentCount,boardPwd
+	
+						 from thuman0503.freeBoardJYY order by boardNum desc) tb , (SELECT @ROWNUM:=0) R) order by boardNum desc
+								) tb2 where rNum between 1 and 10
+   			]]>
+   		</select>
+   		
+
+   		<select id="selectCountBoardList" resultType="int">
+<!--    			<![CDATA[
+   				select max(boardNum) from freeBoard
+   			]]> -->
+   			<![CDATA[
+   				select max(boardNum) from thuman0503.freeBoardJYY
+   			]]>
+   		</select>
+   		
+   		<select id="selectCountAllBoardList" resultType="int">
+<!--    			<![CDATA[
+   				select count(*) from freeBoard
+   			]]> -->
+   			<![CDATA[
+   				select count(*) from thuman0503.freeBoardJYY
+   			]]>
+   		</select>
+   		
+   		<select id="selectCountAllBoardListBySearchText" resultType="int" parameterType="java.util.Map">
+   			
+<!--    				select count(*) from freeBoard
+   				
+				<where>
+					<if test="boardID != null and boardID != ''">
+	   					boardID like '%'||#{searchText}||'%'
+	   				</if>
+	   				<if test="boardTitle != null and boardTitle != ''">
+	   					boardTitle like '%'||#{searchText}||'%'
+	   				</if>
+
+				</where> -->
+   				select count(*) from thuman0503.freeBoardJYY
+   				
+				<where>
+					<if test="boardID != null and boardID != ''">
+	   					boardID like CONCAT('%',#{searchText},'%')
+	   				</if>
+	   				<if test="boardTitle != null and boardTitle != ''">
+	   					boardTitle like CONCAT('%',#{searchText},'%')
+	   				</if>
+
+				</where>
+   			
+   		</select>
+   		
+   		
+   		<select id="selectBoardContent" parameterType="int" resultType="freeBoardVO" >
+<!--    			<![CDATA[
+   				select * from freeBoard where boardNum = #{boardNum}
+   			]]> -->
+   			<![CDATA[
+   				select * from thuman0503.freeBoardJYY where boardNum = #{boardNum}
+   			]]>
+   		</select>
+   		
+   		<update id="updateBoardCount" parameterType="int" >
+<!--    			<![CDATA[
+   				update freeBoard set boardCount = (boardCount+1) where boardNum = #{boardNum}
+   			]]> -->
+   			<![CDATA[
+   				update thuman0503.freeBoardJYY set boardCount = (boardCount+1) where boardNum = #{boardNum}
+   			]]>
+   		</update>
+   		
+   		<insert id="insertBoardContent" parameterType="java.util.Map" >
+<!--    			<![CDATA[
+   				insert into freeBoard(boardID , boardNum , boardContent , boardTitle , boardPwd)
+   				values(#{boardID} , #{boardNum} , #{boardContent} , #{boardTitle}, #{boardPwd} )
+   			]]> -->
+   			<![CDATA[
+   				insert into thuman0503.freeBoardJYY(boardID , boardNum , boardContent ,boardDate ,boardTitle , boardPwd)
+   				values(#{boardID} , #{boardNum} , #{boardContent} ,CURRENT_TIMESTAMP() ,#{boardTitle}, #{boardPwd} )
+   			]]>
+   		</insert>
+   		
+   		<update id="insertImageFile" parameterType="java.util.Map" >
+<!-- 			<foreach collection="imageFileList" item="item" open="insert all" separator=" " close="select * from dual">
+				into t_imageFile(
+					imageFileNo , imageFileName , contentNum) 
+					values(#{item.imageFileNo},#{item.imageFileName},#{item.contentNum})
+			</foreach> -->
+			<foreach collection="imageFileList" item="item" open="insert all" separator=" " close=" ">
+				into thuman0503.t_imageFileJYY(
+					imageFileNo , imageFileName , contentNum) 
+					values(#{item.imageFileNo},#{item.imageFileName},#{item.contentNum})
+			</foreach>
+   		</update>
+   		
+   		<select id="selectImageFileList" parameterType="int" resultMap="imageResult">
+<!--    			<![CDATA[
+   				select * from t_imageFile where contentNum = #{contentNum}
+   			]]> -->
+   			<![CDATA[
+   				select * from thuman0503.t_imageFileJYY where contentNum = #{contentNum}
+   			]]>
+   		</select>
+   		
+   		<update id="updateBoardContent" parameterType="java.util.Map">
+<!--    			<![CDATA[
+   				update freeBoard set boardContent = #{boardContent} ,boardTitle = #{boardTitle} ,
+   				boardDate = sysdate where boardPwd = #{boardPwd} and boardNum = #{boardNum_}
+   			]]> -->
+   			<![CDATA[
+   				update thuman0503.freeBoardJYY set boardContent = #{boardContent} ,boardTitle = #{boardTitle} ,
+   				boardDate = CURRENT_TIMESTAMP() where boardPwd = #{boardPwd} and boardNum = #{boardNum_}
+   			]]>
+   		</update>
+   		
+   		<delete id="deleteBoardContent" parameterType="java.util.Map">
+<!--    			<![CDATA[
+   				delete from freeBoard 
+   			]]>
+   			<where>
+   				<if test="boardNum != null and boardNum != ''">
+   					boardNum = #{boardNum}
+   				</if>
+   				<if test="boardPwd != null and boardPwd != ''">
+   					and boardPwd = #{boardPwd}
+   				</if>
+   			</where> -->
+   			<![CDATA[
+   				delete from thuman0503.freeBoardJYY 
+   			]]>
+   			<where>
+   				<if test="boardNum != null and boardNum != ''">
+   					boardNum = #{boardNum}
+   				</if>
+   				<if test="boardPwd != null and boardPwd != ''">
+   					and boardPwd = #{boardPwd}
+   				</if>
+   			</where>
+   		</delete>
+   </mapper>

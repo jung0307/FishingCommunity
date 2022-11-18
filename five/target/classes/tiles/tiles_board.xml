@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="board" extends="baseLayout">
+		<put-attribute name="title" value="Board" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardList.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="boardContentView" extends="baseLayout">
+		<put-attribute name="title" value="Board"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardContentView.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="boardContentForm" extends="baseLayout">
+		<put-attribute name="title" value="Board"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardContentForm.jsp"></put-attribute>		
+	</definition>
+	
+	<definition name="boardRewriteContentForm" extends="baseLayout">
+		<put-attribute name="title" value="Board"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardRewriteContentForm.jsp"></put-attribute>
+	</definition>
+	
+	<!-- freeBoard -->
+	
+	<definition name="freeBoard" extends="baseLayoutNav2">
+		<put-attribute name="title" value="Freeboard" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/freeBoard/freeBoardList.jsp" ></put-attribute>
+	</definition>
+	
+	<definition name="freeBoardContentView" extends="baseLayoutNav2">
+		<put-attribute name="title" value="Freeboard"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/freeBoard/freeBoardContentView.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="freeBoardContentForm" extends="baseLayoutNav2">
+		<put-attribute name="title" value="Freeboard"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/freeBoard/freeBoardContentForm.jsp"></put-attribute>		
+	</definition>
+	
+	<definition name="freeBoardRewriteContentForm" extends="baseLayoutNav2">
+		<put-attribute name="title" value="Freeboard"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/freeBoard/freeBoardRewriteContentForm.jsp"></put-attribute>
+	</definition>
+	<definition name="test" extends="baseLayout">
+		<put-attribute name="title" value="Freeboard"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/board/test.jsp"></put-attribute>
+	</definition>
+</tiles-definitions>

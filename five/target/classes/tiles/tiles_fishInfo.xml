@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="baseLayoutFishInfo" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" ></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" ></put-attribute>
+		<put-attribute name="nav" value="/WEB-INF/views/common/navFishInfo.jsp" ></put-attribute>
+		<put-attribute name="body" value="" ></put-attribute>
+<!-- 		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp" ></put-attribute> -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" ></put-attribute>
+	</definition>	
+
+	<definition name="fishInfoMain" extends="baseLayoutFishInfo">
+		<put-attribute name="title" value="FishInfo" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/fishInfo/fishInfoMain.jsp" ></put-attribute>
+	</definition>
+	<definition name="fishInfoForm" extends="baseLayoutFishInfo">
+		<put-attribute name="title" value="FishInfo" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/fishInfo/fishInfoForm.jsp" ></put-attribute>
+	</definition>
+	<definition name="updateFishInfoForm" extends="baseLayoutFishInfo">
+		<put-attribute name="title" value="FishInfo" ></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/fishInfo/updateFishInfoForm.jsp" ></put-attribute>
+	</definition>
+	
+</tiles-definitions>

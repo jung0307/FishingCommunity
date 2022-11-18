@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.comment" >
+	
+	<resultMap type="commentVO" id="commentResult">
+		<result property="commentID" column="commentID" />
+		<result property="commentContent" column="commentContent" />
+		<result property="commentDate" column="commentDate" />
+		<result property="commentGroup" column="commentGroup" />
+		<result property="commentHir" column="commentHir" />
+		<result property="commentCount" column="commentCount" />
+		<result property="commentNum" column="commentNum" />
+		<result property="boardNum" column="boardNum" />
+	</resultMap>
+	
+	<select id="selectCommentByBoardNum" parameterType="int" resultMap="commentResult" >
+<!-- 		<![CDATA[			
+			select * from (select tb.*,rownum as rNum from (select * from t_comment where boardNum = #{boardNum}) tb) tb2
+			where rNum between 1 and 100 order by commentGroup desc ,commentHir asc
+			
+		]]> -->
+		<![CDATA[			
+				select * from (select tb.*,@ROWNUM:=@ROWNUM+1 as rNum from (select * from thuman0503.t_commentJYY where boardNum = #{boardNum}) tb , (SELECT @ROWNUM:=0) R) tb2
+			where rNum between 1 and 100 order by commentGroup desc ,commentHir asc
+		]]>
+	</select>
+	
+	<select id="selectCommentNum" resultType="int">
+<!-- 		<![CDATA[
+			select max(commentNum) from t_comment
+		]]> -->
+		<![CDATA[
+			select max(commentNum) from thuman0503.t_commentJYY
+		]]>
+	</select>
+	
+	<select id="selectCommentHir" resultType="int">
+<!-- 		<![CDATA[
+			select max(commentHir) from t_comment where commentGroup = #{commentGroup}
+		]]> -->
+		<![CDATA[
+			select max(commentHir) from thuman0503.t_commentJYY where commentGroup = #{commentGroup}
+		]]>
+	</select>
+	
+	<insert id="insertComment" parameterType="commentVO">
+<!-- 		<![CDATA[
+			insert into t_comment(
+						commentID , commentContent ,commentNum ,commentHir,commentGroup,boardNum 
+			) values (#{commentID} , #{commentContent} ,#{commentNum},#{commentHir},#{commentNum},#{boardNum})
+		]]> -->
+		<![CDATA[
+			insert into thuman0503.t_commentJYY(
+						commentID , commentContent ,commentDate ,commentNum ,commentHir,commentGroup,boardNum 
+			) values (#{commentID} , #{commentContent} ,CURRENT_TIMESTAMP(),#{commentNum},#{commentHir},#{commentNum},#{boardNum})
+		]]>
+	</insert>
+	
+ 	<insert id="insertComment2" parameterType="commentVO">
+<!-- 		<![CDATA[
+			insert into t_comment(
+						commentID , commentContent ,commentNum ,commentHir,commentGroup,boardNum 
+			) values (#{commentID} , #{commentContent} ,#{commentNum},#{commentHir},#{commentGroup},#{boardNum})
+		]]> -->
+		<![CDATA[
+			insert into thuman0503.t_commentJYY(
+						commentID , commentContent ,commentDate,commentNum ,commentHir,commentGroup,boardNum 
+			) values (#{commentID} , #{commentContent} ,CURRENT_TIMESTAMP(),#{commentNum},#{commentHir},#{commentGroup},#{boardNum})
+		]]>
+	</insert> 
+	
+	<select id="selectCommentCountByBoardNum" parameterType="int">
+<!-- 		<![CDATA[
+			select count(boardNum) from t_comment where boardNum = #{boardNum}
+		]]> -->
+		<![CDATA[
+			select count(boardNum) from thuman0503.t_commentJYY where boardNum = #{boardNum}
+		]]>
+	</select>
+	
+	<delete id="deleteComment" parameterType="int">
+<!-- 		<![CDATA[
+			delete from t_comment where commentNum = #{commentNum}
+		]]> -->
+		<![CDATA[
+			delete from thuman0503.t_commentJYY where commentNum = #{commentNum}
+		]]>
+	</delete>
+	
+	<select id="selectCountCommentGroupByBoardNum" resultMap="commentResult">
+<!-- 		<![CDATA[
+			select count(boardNum) as commentCount ,
+			boardNum from t_comment group by 
+			boardNum order by boardNum desc
+		]]> -->
+		<![CDATA[
+			select count(boardNum) as commentCount ,
+			boardNum from thuman0503.t_commentJYY group by 
+			boardNum order by boardNum desc
+		]]>
+	</select>
+	
+</mapper>
+   
